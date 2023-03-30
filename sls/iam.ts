@@ -12,7 +12,15 @@ export const IAM = {
 					'dynamodb:UpdateItem',
 					'dynamodb:DeleteItem',
 				],
-				Resource: [{ 'Fn::GetAtt': ['usersTable', 'Arn'] }],
+				Resource: [
+					{ 'Fn::GetAtt': ['usersTable', 'Arn'] },
+					{
+						'Fn::Join': [
+							'/',
+							[{ 'Fn::GetAtt': ['usersTable', 'Arn'] }, 'index/*'],
+						],
+					},
+				],
 			},
 		],
 	},

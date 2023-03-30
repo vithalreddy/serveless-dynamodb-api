@@ -5,7 +5,7 @@
 # Setup
 
 - git clone this repo
-- npm ci
+- Install deps `npm ci`
 - [openapi docs](docs/openapi.json)
 - [postman collection](docs/postman.json)
 - local testing `npm run dev`
