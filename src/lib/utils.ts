@@ -31,7 +31,7 @@ export class Handler {
 	#path: string;
 	#method: HTTP_METHOD;
 	#handlerPath: string;
-	#docs: Record<string, any>;
+	#docs: Record<string, unknown>;
 
 	constructor(
 		fn: HANDLER_FN,
