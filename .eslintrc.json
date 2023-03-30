@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json.schemastore.org/eslintrc",
+    "env": {
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    // Specifying Parser
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "tsconfigRootDir": ".",
+        "project": [
+            "./tsconfig.json"
+        ]
+    },
+    // Configuring third-party plugins
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        // Configure prettier
+        "prettier/prettier": "error",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "import/prefer-default-export": "off",
+        "import/no-import-module-exports": "off",
+        "class-methods-use-this": "off",
+        "@typescript-eslint/lines-between-class-members": "off",
+        "no-console": "off",
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ]
+    }
+}

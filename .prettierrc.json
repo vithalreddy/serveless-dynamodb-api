@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json.schemastore.org/prettierrc",
+    "printWidth": 80,
+    "endOfLine": "lf",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "indentStyle": "space",
+    "useTabs": true,
+    "trailingComma": "all",
+    "importOrder": [
+        "^node:(.*)$",
+        "<THIRD_PARTY_MODULES>",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}

@@ -1,0 +1,51 @@
+{
+  "name": "serverless-dynamodb-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sls": "sls",
+    "dev": "sls offline",
+    "deploy": "sls deploy --verbose",
+    "data-import": "ts-node -T scripts/import-users-data.ts",
+    "gen-openapi": "sls openapi generate -f json -a 3.0.3 -o docs/openapi.json -p docs/postman.json",
+    "lint": "tsc --noEmit && eslint src/**/*.ts --cache --max-warnings=0",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serverless",
+    "dynamodb"
+  ],
+  "author": "Vithal Reddy",
+  "license": "MIT",
+  "devDependencies": {
+    "@serverless/typescript": "^3.29.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/aws-lambda": "^8.10.114",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "dynamoose-logger": "^3.1.0",
+    "esbuild": "^0.16.17",
+    "eslint": "^8.37.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.7",
+    "serverless": "^3.29.0",
+    "serverless-api-gateway-throttling": "^2.0.3",
+    "serverless-esbuild": "^1.43.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-openapi-documenter": "^0.0.48",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "@aws-sdk/credential-providers": "^3.301.0",
+    "@middy/core": "^4.2.8",
+    "@middy/http-json-body-parser": "^4.2.8",
+    "dynamoose": "^3.1.0"
+  }
+}

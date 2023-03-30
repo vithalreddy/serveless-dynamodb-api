@@ -1,0 +1,270 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Falcon User APIs",
+    "description": "",
+    "version": "1"
+  },
+  "components": {
+    "schemas": {
+      "startFrom": {
+        "type": "number"
+      },
+      "GetUsersResponse": {
+        "properties": {
+          "error": {
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "gender": {
+                  "type": "string",
+                  "enum": [
+                    "Female",
+                    "Genderfluid",
+                    "Male",
+                    "Polygender",
+                    "Bigender",
+                    "Agender",
+                    "Non-binary",
+                    "Genderqueer"
+                  ]
+                },
+                "ipAddress": {
+                  "type": "string",
+                  "format": "ipv4"
+                },
+                "dateJoined": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id",
+                "firstName",
+                "lastName",
+                "email",
+                "gender",
+                "ipAddress",
+                "dateJoined"
+              ]
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "data": {
+            "nullable": true
+          }
+        }
+      },
+      "id": {
+        "type": "number"
+      },
+      "GetUserResponse": {
+        "properties": {
+          "error": {
+            "nullable": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "gender": {
+                "type": "string",
+                "enum": [
+                  "Female",
+                  "Genderfluid",
+                  "Male",
+                  "Polygender",
+                  "Bigender",
+                  "Agender",
+                  "Non-binary",
+                  "Genderqueer"
+                ]
+              },
+              "ipAddress": {
+                "type": "string",
+                "format": "ipv4"
+              },
+              "dateJoined": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "id",
+              "firstName",
+              "lastName",
+              "email",
+              "gender",
+              "ipAddress",
+              "dateJoined"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v1/users": {
+      "get": {
+        "summary": "Get all users",
+        "description": "list all users ordered by joining date descending",
+        "operationId": "falcon-dev-getUsers",
+        "parameters": [
+          {
+            "name": "startFrom",
+            "in": "query",
+            "description": "used to paginated items based on joining date. pass last item joining date",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/startFrom"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUsersResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "something went wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{id}": {
+      "get": {
+        "summary": "Get a user by id",
+        "description": "",
+        "operationId": "falcon-dev-getUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user's id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "something went wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://cbziucvnqf.execute-api.ap-south-1.amazonaws.com/"
+    },
+    {
+      "url": "http://locahost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User"
+    }
+  ]
+}
