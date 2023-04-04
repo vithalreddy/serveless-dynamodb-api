@@ -78,3 +78,15 @@ export class HttpError extends Error {
 		this.status = status;
 	}
 }
+
+export class RecordBase64Util {
+	static encoding = 'base64url' as const;
+
+	static encode(data: Record<string, unknown>) {
+		return Buffer.from(JSON.stringify(data)).toString(this.encoding);
+	}
+
+	static decode(data: string): Record<string, unknown> {
+		return JSON.parse(Buffer.from(data, this.encoding).toString());
+	}
+}

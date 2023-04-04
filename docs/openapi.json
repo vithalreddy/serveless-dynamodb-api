@@ -7,8 +7,13 @@
   },
   "components": {
     "schemas": {
-      "startFrom": {
-        "type": "number"
+      "lastKey": {
+        "type": "string"
+      },
+      "pageSize": {
+        "type": "number",
+        "minimum": 5,
+        "maximum": 25
       },
       "GetUsersResponse": {
         "properties": {
@@ -16,53 +21,61 @@
             "nullable": true
           },
           "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "number"
-                },
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string",
-                  "format": "email"
-                },
-                "gender": {
-                  "type": "string",
-                  "enum": [
-                    "Female",
-                    "Genderfluid",
-                    "Male",
-                    "Polygender",
-                    "Bigender",
-                    "Agender",
-                    "Non-binary",
-                    "Genderqueer"
+            "type": "object",
+            "properties": {
+              "docs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "enum": [
+                        "Female",
+                        "Genderfluid",
+                        "Male",
+                        "Polygender",
+                        "Bigender",
+                        "Agender",
+                        "Non-binary",
+                        "Genderqueer"
+                      ]
+                    },
+                    "ipAddress": {
+                      "type": "string",
+                      "format": "ipv4"
+                    },
+                    "dateJoined": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "gender",
+                    "ipAddress",
+                    "dateJoined"
                   ]
-                },
-                "ipAddress": {
-                  "type": "string",
-                  "format": "ipv4"
-                },
-                "dateJoined": {
-                  "type": "number"
                 }
               },
-              "required": [
-                "id",
-                "firstName",
-                "lastName",
-                "email",
-                "gender",
-                "ipAddress",
-                "dateJoined"
-              ]
+              "lastKey": {
+                "type": "string"
+              }
             }
           }
         }
@@ -144,12 +157,21 @@
         "operationId": "falcon-dev-getUsers",
         "parameters": [
           {
-            "name": "startFrom",
+            "name": "lastKey",
             "in": "query",
-            "description": "used to paginated items based on joining date. pass last item joining date",
+            "description": "used to paginated items based on joining date. pass lastKey received in last request",
             "required": false,
             "schema": {
-              "$ref": "#/components/schemas/startFrom"
+              "$ref": "#/components/schemas/lastKey"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "docs per request",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/pageSize"
             }
           }
         ],

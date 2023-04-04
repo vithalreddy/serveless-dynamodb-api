@@ -79,8 +79,16 @@ export const openAPI = {
 						type: 'null',
 					},
 					data: {
-						type: 'array',
-						items: userSchema,
+						type: 'object',
+						properties: {
+							docs: {
+								type: 'array',
+								items: userSchema,
+							},
+							lastKey: {
+								type: 'string',
+							},
+						},
 					},
 				},
 			},

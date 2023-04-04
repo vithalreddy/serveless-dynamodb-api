@@ -14,11 +14,20 @@ export const { handler: getUsers, config: getUsersConfig } = new Handler(
 		tags: ['User'],
 		queryParams: [
 			{
-				name: 'startFrom',
+				name: 'lastKey',
 				description:
-					'used to paginated items based on joining date. pass last item joining date',
+					'used to paginated items based on joining date. pass lastKey received in last request',
+				schema: {
+					type: 'string',
+				},
+			},
+			{
+				name: 'pageSize',
+				description: 'docs per request',
 				schema: {
 					type: 'number',
+					minimum: 5,
+					maximum: 25,
 				},
 			},
 		],

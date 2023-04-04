@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
 
 import { User } from '../db';
-import { HttpError, Response } from '../lib/utils';
+import { HttpError, RecordBase64Util, Response } from '../lib/utils';
 
 export class UserService {
 	async getUserById(event: APIGatewayProxyEvent) {
@@ -20,13 +20,14 @@ export class UserService {
 
 	async getUsers(event: APIGatewayProxyEvent) {
 		try {
-			const { startFrom, pageSize = 25 } = event.queryStringParameters || {};
+			const { lastKey, pageSize = 25 } = event.queryStringParameters || {};
 			if (Number(pageSize) > 25)
+				throw new HttpError('Invalid value for pageSize', 400);
+			if (Number(pageSize) < 5)
 				throw new HttpError('Invalid value for pageSize', 400);
 
 			const query = User.query({ status: 1 });
-
-			if (startFrom) query.where('dateJoined').lt(Number(startFrom));
+			if (lastKey) query.startAt(RecordBase64Util.decode(lastKey));
 
 			const res = await query
 				.using('dateJoinedIdx')
@@ -34,7 +35,10 @@ export class UserService {
 				.limit(Number(pageSize))
 				.exec();
 
-			return new Response(200, res).build();
+			const result = { docs: res, lastKey: null };
+			if (res.lastKey) result.lastKey = RecordBase64Util.encode(res.lastKey);
+
+			return new Response(200, result).build();
 		} catch (error) {
 			return new Response(error.status || 500, null, error).build();
 		}
